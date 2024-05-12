@@ -26,14 +26,10 @@ desc_vector_dataset = FlickrDescDataset("../data/captions.txt")
 img_vector_loader = DataLoader(dataset=img_vector_dataset, batch_size=15, num_workers=4, shuffle=False)
 
 # Wrap the DataLoader with tqdm
-uploaded = 26762
-count  = 0
+
+
 for batch in tqdm(img_vector_loader, desc="Processing batches", leave=False):
-
-    count += len(batch)
-
-    if(count>=uploaded):
-        indexer.IndexImageCluster(batch)
+    indexer.IndexImageCluster(batch)
     
 
 
