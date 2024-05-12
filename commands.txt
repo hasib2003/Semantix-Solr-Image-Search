@@ -1,0 +1,52 @@
+for adding the schema
+
+curl http://localhost:8983/solr/description_vector_collection/schema -X POST -H 'Content-type:application/json' --data-binary '{
+  "add-field-type" : {
+    "name":"clip_feature",
+    "class":"solr.DenseVectorField",
+    "vectorDimension":512,
+    "similarityFunction":"cosine",
+    "knnAlgorithm":"hnsw"
+  },  
+  "add-field" : [
+     {
+        "name":"description_vector",
+        "type":"clip_feature",
+        "indexed":true,
+        "stored":true
+      },
+      {
+        "name":"image_path",
+        "type":"text_general",
+        "multiValued":false,
+        "stored":true
+      }
+    ]
+}'
+
+
+
+curl http://localhost:8983/solr/image_vector_collection/schema -X POST -H 'Content-type:application/json' --data-binary '{
+  "add-field-type" : {
+    "name":"clip_feature",
+    "class":"solr.DenseVectorField",
+    "vectorDimension":512,
+    "similarityFunction":"cosine",
+    "knnAlgorithm":"hnsw"
+  },  
+  "add-field" : [
+     {
+        "name":"image_vector",
+        "type":"clip_feature",
+        "indexed":true,
+        "stored":true
+      },
+      {
+        "name":"image_path",
+        "type":"text_general",
+        "multiValued":false,
+        "stored":true
+      }
+    ]
+}'
+
