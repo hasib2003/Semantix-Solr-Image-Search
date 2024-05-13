@@ -1,4 +1,4 @@
-pictures/
-_pycache_/
-.txt
-.json
+/pictures/
+__pycache__/
+*.txt
+*.json
