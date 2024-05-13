@@ -36,10 +36,10 @@ class FlickrImageDataset(Dataset):
         # print(files)
 
     def __len__(self):
-        return self.num_samples - 26762
+        return self.num_samples
     
     def __getitem__(self, index):
-        index += 26762
+       
         
         entry = self.files[index]
         imgPath = os.path.join(self.pathToImgDir,entry)

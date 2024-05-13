@@ -10,7 +10,7 @@ from PIL import Image
 import torch
 import os
 
-class QueryHandler():
+class QueryHandler:
     def __init__(self) -> None:
 
         self.vectorizer = Vectorizer() # for preprocessing the query
@@ -26,6 +26,8 @@ class QueryHandler():
         # desc_best_matcher = self.infer.query_descriptions(img)
         print(img_best_matches)
 
+        return img_best_matches
+
     def query_by_text(self,text):
         
         assert type(text) is str ,f"Input should be of type str"
@@ -33,10 +35,12 @@ class QueryHandler():
         best_matches = self.infer.query_images(query_vector)
         print(best_matches)
 
+        return best_matches
 
 
-handler = QueryHandler()
-# handler.query_by_image
+
+# handler = QueryHandler()
+# # handler.query_by_image
 
 
 

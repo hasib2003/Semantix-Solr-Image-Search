@@ -1,12 +1,10 @@
 from vectorizer import Vectorizer
-import os
-import torch
 import pysolr
 
 
 
 
-class Inference():
+class Inference:
     def __init__(self,solr_url , image_collection,description_collection) -> None:
         # self.image_collection = image_collection
         # self.descripton_collection = description_collection;
@@ -26,7 +24,7 @@ class Inference():
         
         assert type(query_vector) is list and len(query_vector)==512, "input should be the list of 512 dimension"
         
-        q = f'{{!knn f=image_vector topK=10}}{query_vector}'
+        q = f'{{!knn f=image_vector topK=3}}{query_vector}'
         results = self.solr_images_instance.search(q)
 
         img_list = []
@@ -45,7 +43,7 @@ class Inference():
         
         assert type(query_vector) is list and len(query_vector)==512, "input should be the list of 512 dimension"
         
-        q = f'{{!knn f=image_vector topK=10}}{query_vector}'
+        q = f'{{!knn f=image_vector topK=3}}{query_vector}'
         results = self.solr_description_instance.search(q)
 
         img_list = []
@@ -58,8 +56,8 @@ class Inference():
         
 
 
-inferencer = Inference("http://localhost:8983/solr","image_vector_collection","")
-inferencer.query_images(input())
+# inferencer = Inference("http://localhost:8983/solr","image_vector_collection","")
+# inferencer.query_images(input())
 
 
 
