@@ -31,9 +31,7 @@ class FlickrImageDataset(Dataset):
                 self.files.append(file)
 
         self.num_samples = len(self.files)
-        # print(f"Found {self.num_samples} in {self.pathToImgDir}")
 
-        # print(files)
 
     def __len__(self):
         return self.num_samples
@@ -45,19 +43,10 @@ class FlickrImageDataset(Dataset):
         imgPath = os.path.join(self.pathToImgDir,entry)
         img = Image.open(imgPath).convert("L")
         img_vector = self.vectorizer.vectorize_img(img)
-        img_vector = torch.squeeze(img_vector)
-
-        # print("path ",entry,"img vector ",img_vector)
-
-    
+        img_vector = torch.squeeze(img_vector)    
         return  entry,img_vector
 
         
-# img_vector_dataset =  FlickrImageDataset("data/flickr30k_images")
-
-# for i in img_vector_dataset:
-#     print(i)
-#     break
 
 class FlickrDescDataset(Dataset):
 
@@ -89,7 +78,6 @@ class FlickrDescDataset(Dataset):
                 line = file.readline()
 
     def __getitem__(self, index):
-        index += 82575
         
         entry = self.meta_dataset[index]       
         desc_vector = self.vectorizer.vectorize_text(entry[1])
@@ -97,16 +85,4 @@ class FlickrDescDataset(Dataset):
         return  entry[0],desc_vector
     
     def __len__(self):
-        return (len(self.meta_dataset) - 82575)
-
-# obj = FlickerDescDataset("./data/captions.txt")
-# for i in obj:
-#     imgPath ,featureVector = i
-#     print(imgPath ,featureVector.size() )
-#     break;
-
-# obj =FlickerImageDataset(pathToImgDir="data/flickr30k_images")
-# for i in obj:
-#     imgPath ,featureVector = i
-#     print(imgPath ,featureVector.size() )
-#     break;
+        return len(self.meta_dataset)

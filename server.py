@@ -32,8 +32,6 @@ def Text():
     best_matching_paths = query_handler.query_by_text(text=data)
     images_data = paths2base64(best_matching_paths)
 
-    # print("Response ",images_data,"\n")
-
     return jsonify(images_data)
 
 
