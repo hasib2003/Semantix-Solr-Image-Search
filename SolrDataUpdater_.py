@@ -10,7 +10,7 @@ class SolrDataUpdater:
         self.solr_url = solr_url
         self.collection_name = collection_name
 
-    def updater(self, data):
+    def index(self, data):
         json_data = []
         for i in range(len(data[0])):
             document = {

@@ -43,7 +43,7 @@ class Inference:
         
         assert type(query_vector) is list and len(query_vector)==512, "input should be the list of 512 dimension"
         
-        q = f'{{!knn f=image_vector topK=3}}{query_vector}'
+        q = f'{{!knn f=description_vector topK=3}}{query_vector}'
         results = self.solr_description_instance.search(q)
 
         img_list = []

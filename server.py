@@ -8,18 +8,16 @@ from queryHandler import QueryHandler
 BASE_DIR = "/home/hasib/semester_6/Parallel&Dist/project/data/flickr30k_images"
 query_handler = QueryHandler()
 app = Flask(__name__)
-print(1)
 CORS(app)
 
-# @app.route('/upload_image', methods=['GET','POST'])
-# def upload_image():
-    
+   
 def paths2base64(path_list):
     image_data = []
     for filename in path_list:
         with open(os.path.join(BASE_DIR, filename), 'rb') as f:
             base64_encoded_data = base64.b64encode(f.read()).decode('utf-8')
             image_data.append({'filename': filename, 'base64': base64_encoded_data})
+    print("sending... ",path_list,"\n")
     return image_data
 
 @app.route('/Text', methods=['POST'])
@@ -27,22 +25,18 @@ def Text():
 
     data = request.get_json()
    
-    print(data)
-
-    # with open("alpha.txt", 'w') as file:
-    #     file.write(data + '\n')
-
+    print("\nSearching for ... ",data)
 
     # ASSUMING THAT DATA CONTAINS THE QUERY STRING
 
     best_matching_paths = query_handler.query_by_text(text=data)
     images_data = paths2base64(best_matching_paths)
 
+    # print("Response ",images_data,"\n")
+
     return jsonify(images_data)
 
 
-
-    # return jsonify({'message': 'Received text successfully'}), 200
 
 
 
@@ -62,26 +56,17 @@ def Upload_image():
 
         image_path1 = os.path.join('pictures', 'uploaded_image.jpg')
         
+        print("\nSearching for .... ",image_path1)
+
         with open(image_path1, 'wb') as out_file:
             out_file.write(image_data)
 
-        print(image_path1)
-
-        # sending request to solr 
         best_matching_paths = query_handler.query_by_image(image_path=image_path1)
-        # image_data = []
-
-
-        # for filename in best_matching_paths:
-        #     with open(os.path.join(BASE_DIR, filename), 'rb') as f:
-        #         base64_encoded_data = base64.b64encode(f.read()).decode('utf-8')
-        #         image_data.append({'filename': filename, 'base64': base64_encoded_data})
-
+        
         images_data = paths2base64(best_matching_paths)
 
-        # image_path = image_path1
-        # print("global image path",image_path)
-        # return jsonify({'message': 'Image path received successfully.'}), 200
+        print("Response ",image_data,"\n")
+
         return jsonify(images_data)
     
     except Exception as e:
@@ -110,12 +95,7 @@ def get_images():
     return jsonify(images=image_data)
 
 
-
-print(11)
 if __name__ == '__main__':
-    
-
-    print(1)
     app.run(host='0.0.0.0',port=4000,debug=True)
-    print(3)
+
 

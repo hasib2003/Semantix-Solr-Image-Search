@@ -89,6 +89,7 @@ class FlickrDescDataset(Dataset):
                 line = file.readline()
 
     def __getitem__(self, index):
+        index += 82575
         
         entry = self.meta_dataset[index]       
         desc_vector = self.vectorizer.vectorize_text(entry[1])
@@ -96,7 +97,7 @@ class FlickrDescDataset(Dataset):
         return  entry[0],desc_vector
     
     def __len__(self):
-        return len(self.meta_dataset)
+        return (len(self.meta_dataset) - 82575)
 
 # obj = FlickerDescDataset("./data/captions.txt")
 # for i in obj:
